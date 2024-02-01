@@ -1,5 +1,8 @@
 package com.example.demo.repo;
 
+import java.util.List;
+
+import org.hibernate.query.TypedParameterValue;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.repo.modelo.Estudiante;
@@ -7,6 +10,7 @@ import com.example.demo.repo.modelo.Estudiante;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
 @Repository
@@ -49,6 +53,13 @@ public class EstudianteRespositoryImpl implements IEstudianteRepository {
 	public void eliminar(Integer id) {
 		// TODO Auto-generated method stub
 		this.entityManager.remove(this.seleccionar(id));
+	}
+
+	@Override
+	public List<Estudiante> seleccionarTodos(String genero) {
+		TypedQuery<Estudiante> query = this.entityManager.createQuery("SELECT e FROM Estudiante e WHERE e.genero=: variable",Estudiante.class);
+		query.setParameter("variable", genero);
+		return query.getResultList();
 	}
 
 }
