@@ -18,7 +18,7 @@ import com.example.demo.repo.modelo.Profesor;
 import com.example.demo.service.IProfesorService;
 
 @RestController
-@RequestMapping(path = "/profesor")
+@RequestMapping(path = "/profesores")
 public class ProfesorContrllerRestFul {
 	@Autowired
 	private IProfesorService profesorService;
