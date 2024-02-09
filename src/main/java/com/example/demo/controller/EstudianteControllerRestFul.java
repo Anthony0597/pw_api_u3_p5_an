@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.repo.modelo.Estudiante;
 import com.example.demo.service.IEstudianteService;
-import org.springframework.web.bind.annotation.PathVariable;
+import com.example.demo.service.IMateriaService;
+import com.example.demo.service.to.EstudianteTO;
+import com.example.demo.service.to.MateriaTO;
 
 
 //API: por el proyecto Java
@@ -31,6 +35,9 @@ public class EstudianteControllerRestFul {
 	@Autowired
 	private IEstudianteService estudianteService;
 	
+	@Autowired
+	private IMateriaService materiaService;
+	
 	//Metodos: Capacidades
 	
 	//Path Variable  registro especifico
@@ -41,7 +48,7 @@ public class EstudianteControllerRestFul {
 	//filtrar un conjunto/ lista de datos RequestParam
 	//http:pokemon.com/API/V1/jugadores/pokemon/consultarTodos?genero=M&edad=100
 	
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/tmp", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Estudiante>>  consultarTodos(@RequestParam (required = false, defaultValue = "M") String genero){
 		List<Estudiante> lista = this.estudianteService.consultarTodos(genero);
 		HttpHeaders cabecera = new HttpHeaders();
@@ -78,5 +85,15 @@ public class EstudianteControllerRestFul {
 		this.estudianteService.borrar(id);
 	}
 	
+	@GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<EstudianteTO>>  consultarTodosHateoas(){
+		List<EstudianteTO> lista = this.estudianteService.consultarTodosTO();
+		return ResponseEntity.status(HttpStatus.OK).body(lista);
+	}
 	
+	@GetMapping(path = "/{id}/materias", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<MateriaTO>> consultarMateriasPorId(@PathVariable Integer id){
+		List<MateriaTO> lista = this.materiaService.buscarPorIdEstudiante(id);
+		return ResponseEntity.status(HttpStatus.OK).body(lista);
+	}
 }
