@@ -11,7 +11,7 @@ public interface IEstudianteService {
 		public void guardar(Estudiante estudiante);
 		public void actualizar(Estudiante estudiante);
 		public void actualizarParcial(Integer id,String apellido, String nombre);
-		public Estudiante buscar(Integer id);
+		public EstudianteTO buscar(Integer id);
 		public void borrar(Integer id);
 		public List<Estudiante> consultarTodos(String genero);
 		public List<EstudianteTO> consultarTodosTO();
