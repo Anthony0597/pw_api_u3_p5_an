@@ -49,17 +49,11 @@ public class EstudianteServiceImpl implements IEstudianteService {
 	}
 
 	@Override
-	public List<Estudiante> consultarTodos(String genero) {
-		// TODO Auto-generated method stub
-		return this.estudianteRepository.seleccionarTodos(genero);
-	}
-
-	@Override
-	public List<EstudianteTO> consultarTodosTO() {
-		List<Estudiante> lista = this.estudianteRepository.seleccionarTodos("M");
-		List<EstudianteTO> listaFinal=new ArrayList<>();
+	public List<EstudianteLigeroTO> consultarTodosTO() {
+		List<Estudiante> lista = this.estudianteRepository.seleccionarTodos();
+		List<EstudianteLigeroTO> listaFinal=new ArrayList<>();
 		for(Estudiante e : lista) {
-			listaFinal.add(this.convertir(e));
+			listaFinal.add(this.convertirLigero(e));
 		}
 		return listaFinal;
 	}
@@ -88,7 +82,7 @@ public class EstudianteServiceImpl implements IEstudianteService {
 	}
 
 	@Override
-	public EstudianteLigeroTO buscarLigero(Integer id) {
+	public EstudianteLigeroTO consultarLigero(Integer id) {
 		Estudiante estu =this.estudianteRepository.seleccionar(id);
 		return this.convertirLigero(estu);
 	}

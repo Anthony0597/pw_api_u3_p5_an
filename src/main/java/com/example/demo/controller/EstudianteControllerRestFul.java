@@ -51,17 +51,8 @@ public class EstudianteControllerRestFul {
 	// filtrar un conjunto/ lista de datos RequestParam
 	// http:pokemon.com/API/V1/jugadores/pokemon/consultarTodos?genero=M&edad=100
 
-	@GetMapping(path = "/tmp", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Estudiante>> consultarTodos(
-			@RequestParam(required = false, defaultValue = "M") String genero) {
-		List<Estudiante> lista = this.estudianteService.consultarTodos(genero);
-		HttpHeaders cabecera = new HttpHeaders();
-		cabecera.add("mensaje_242", "Lista consultada de manera satisfactoria");
-		cabecera.add("mensaje_info", "El sistema va aestar en mantenimiento el fin de semana");
-		return new ResponseEntity<>(lista, cabecera, 242);
-	}
 
-	@GetMapping(path = "/{id}", produces = "application/json")
+	@GetMapping(path = "/self/{id}", produces = "application/json")
 	public ResponseEntity<EstudianteTO> buscar(@PathVariable Integer id) {
 		EstudianteTO estu = this.estudianteService.buscar(id);
 		Link link = linkTo(methodOn(EstudianteControllerRestFul.class).consultarMateriasPorId(estu.getId()))
@@ -70,16 +61,16 @@ public class EstudianteControllerRestFul {
 		return ResponseEntity.status(HttpStatus.OK).body(estu);
 	}
 
-	@GetMapping(path = "/ligero/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<EstudianteLigeroTO> buscarLigero(@PathVariable Integer id) {
-		EstudianteLigeroTO estu = this.estudianteService.buscarLigero(id);
+		EstudianteLigeroTO estu = this.estudianteService.consultarLigero(id);
 		Link link = linkTo(methodOn(EstudianteControllerRestFul.class).buscar(id))
 				.withSelfRel();
 		estu.add(link);
 		return ResponseEntity.status(HttpStatus.OK).body(estu);
 	}
 	
-	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void guardar(@RequestBody Estudiante estudiante) {
 		this.estudianteService.guardar(estudiante);
 	}
@@ -101,9 +92,9 @@ public class EstudianteControllerRestFul {
 	}
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<EstudianteTO>> consultarTodosHateoas() {
-		List<EstudianteTO> lista = this.estudianteService.consultarTodosTO();
-		for (EstudianteTO est : lista) {
+	public ResponseEntity<List<EstudianteLigeroTO>> consultarTodosHateoas() {
+		List<EstudianteLigeroTO> lista = this.estudianteService.consultarTodosTO();
+		for (EstudianteLigeroTO est : lista) {
 			Link link = linkTo(methodOn(EstudianteControllerRestFul.class).consultarMateriasPorId(est.getId()))
 					.withRel("materias");
 			est.add(link);

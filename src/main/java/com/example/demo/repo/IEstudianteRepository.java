@@ -12,5 +12,5 @@ public interface IEstudianteRepository {
 	public void actualizarParcial(Integer id,String apellido, String nombre);
 	public Estudiante seleccionar(Integer id);
 	public void eliminar(Integer id);
-	public List<Estudiante> seleccionarTodos(String genero);
+	public List<Estudiante> seleccionarTodos();
 }
