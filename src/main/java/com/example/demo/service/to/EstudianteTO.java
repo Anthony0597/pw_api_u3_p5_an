@@ -9,9 +9,14 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO> implements S
 	
 	private static final long serialVersionUID = 1L;
 	private Integer id;
+	private String cedula;
 	private String nombre;
 	private String apellido;
 	private String genero;
+	private String direccion;
+	private String nacionalidad;
+	private String telefono;
+	private String email;
 	private LocalDateTime fechaNacimiento;
 	
 	//SET Y GET
@@ -44,6 +49,36 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO> implements S
 	}
 	public void setFechaNacimiento(LocalDateTime fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
+	}
+	public String getCedula() {
+		return cedula;
+	}
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
+	public String getDireccion() {
+		return direccion;
+	}
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+	public String getNacionalidad() {
+		return nacionalidad;
+	}
+	public void setNacionalidad(String nacionalidad) {
+		this.nacionalidad = nacionalidad;
+	}
+	public String getTelefono() {
+		return telefono;
+	}
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	

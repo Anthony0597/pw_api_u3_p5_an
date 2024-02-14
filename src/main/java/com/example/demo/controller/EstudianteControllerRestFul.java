@@ -1,12 +1,14 @@
 package com.example.demo.controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,11 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.repo.modelo.Estudiante;
 import com.example.demo.service.IEstudianteService;
 import com.example.demo.service.IMateriaService;
+import com.example.demo.service.to.EstudianteLigeroTO;
 import com.example.demo.service.to.EstudianteTO;
 import com.example.demo.service.to.MateriaTO;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 //API: por el proyecto Java
 
@@ -66,13 +66,19 @@ public class EstudianteControllerRestFul {
 		EstudianteTO estu = this.estudianteService.buscar(id);
 		Link link = linkTo(methodOn(EstudianteControllerRestFul.class).consultarMateriasPorId(estu.getId()))
 				.withRel("materias");
-		Link link2 = linkTo(methodOn(EstudianteControllerRestFul.class).consultarMateriasPorId(estu.getId()))
-				.withSelfRel();
 		estu.add(link);
-		estu.add(link2);
 		return ResponseEntity.status(HttpStatus.OK).body(estu);
 	}
 
+	@GetMapping(path = "/ligero/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<EstudianteLigeroTO> buscarLigero(@PathVariable Integer id) {
+		EstudianteLigeroTO estu = this.estudianteService.buscarLigero(id);
+		Link link = linkTo(methodOn(EstudianteControllerRestFul.class).buscar(id))
+				.withSelfRel();
+		estu.add(link);
+		return ResponseEntity.status(HttpStatus.OK).body(estu);
+	}
+	
 	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
 	public void guardar(@RequestBody Estudiante estudiante) {
 		this.estudianteService.guardar(estudiante);
