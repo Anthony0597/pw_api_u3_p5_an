@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -34,6 +35,7 @@ import com.example.demo.service.to.MateriaTO;
 //Servicio - Constroller: Clase controller
 @RestController // Servicios
 @RequestMapping(path = "/estudiantes")
+@CrossOrigin	
 public class EstudianteControllerRestFul {
 	@Autowired
 	private IEstudianteService estudianteService;
@@ -97,7 +99,10 @@ public class EstudianteControllerRestFul {
 		for (EstudianteLigeroTO est : lista) {
 			Link link = linkTo(methodOn(EstudianteControllerRestFul.class).consultarMateriasPorId(est.getId()))
 					.withRel("materias");
+			Link link2 = linkTo(methodOn(EstudianteControllerRestFul.class).buscar(est.getId()))
+					.withSelfRel();
 			est.add(link);
+			est.add(link2);
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(lista);
 	}
