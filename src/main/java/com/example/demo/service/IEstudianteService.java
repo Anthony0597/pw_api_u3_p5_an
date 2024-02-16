@@ -9,8 +9,8 @@ import com.example.demo.service.to.EstudianteTO;
 public interface IEstudianteService {
 	//CRUD
 		//Crate, READ, UPDATE(parcial), DELETE
-		public void guardar(Estudiante estudiante);
-		public void actualizar(Estudiante estudiante);
+		public void guardar(EstudianteTO estudiante);
+		public void actualizar(EstudianteTO estudiante);
 		public void actualizarParcial(Integer id,String apellido, String nombre);
 		public EstudianteTO buscar(Integer id);
 		public EstudianteLigeroTO consultarLigero(Integer id);

@@ -73,12 +73,12 @@ public class EstudianteControllerRestFul {
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void guardar(@RequestBody Estudiante estudiante) {
+	public void guardar(@RequestBody EstudianteTO estudiante) {
 		this.estudianteService.guardar(estudiante);
 	}
 
 	@PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void actualizar(@RequestBody Estudiante estudiante, @PathVariable Integer id) {
+	public void actualizar(@RequestBody EstudianteTO estudiante, @PathVariable Integer id) {
 		estudiante.setId(id);
 		this.estudianteService.actualizar(estudiante);
 	}

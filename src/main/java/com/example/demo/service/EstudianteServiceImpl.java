@@ -18,15 +18,15 @@ public class EstudianteServiceImpl implements IEstudianteService {
 	private IEstudianteRepository estudianteRepository;
 
 	@Override
-	public void guardar(Estudiante estudiante) {
+	public void guardar(EstudianteTO estudiante) {
 		// TODO Auto-generated method stub
-		this.estudianteRepository.insertar(estudiante);
+		this.estudianteRepository.insertar(this.convertirEst(estudiante));
 	}
 
 	@Override
-	public void actualizar(Estudiante estudiante) {
+	public void actualizar(EstudianteTO estudiante) {
 		// TODO Auto-generated method stub
-		this.estudianteRepository.actualizar(estudiante);
+		this.estudianteRepository.actualizar(this.convertirEst(estudiante));
 	}
 
 	@Override
@@ -71,6 +71,21 @@ public class EstudianteServiceImpl implements IEstudianteService {
 		estuTO.setNacionalidad(est.getNacionalidad());
 		estuTO.setTelefono(est.getTelefono());
 		return estuTO;
+	}
+	
+	private Estudiante convertirEst(EstudianteTO est) {
+		Estudiante estu= new Estudiante();
+		estu.setNombre(est.getNombre());
+		estu.setApellido(est.getApellido());
+		estu.setGenero(est.getGenero());
+		estu.setFechaNacimiento(est.getFechaNacimiento());
+		estu.setId(est.getId());
+		estu.setCedula(est.getCedula());
+		estu.setDireccion(est.getDireccion());
+		estu.setEmail(est.getEmail());
+		estu.setNacionalidad(est.getNacionalidad());
+		estu.setTelefono(est.getTelefono());
+		return estu;
 	}
 	
 	private EstudianteLigeroTO convertirLigero(Estudiante est) {
